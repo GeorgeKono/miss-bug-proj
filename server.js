@@ -10,4 +10,10 @@ app.get('/api/bug', (req, res) => {
         .then(bugs => res.send(bugs))
 })
 
+app.get('/api/bug/:bugId', (req, res) => {
+    const bugId = req.params.bugId
+    bugService.getById(bugId)
+        .then(bug => res.send(bug))     
+})
+
 app.listen(3030, () => console.log('Server ready at port 3030'))
