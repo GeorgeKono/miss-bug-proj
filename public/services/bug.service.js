@@ -37,7 +37,7 @@ function remove(bugId) {
 }
 
 function save(bug) {
-    var queryStr = `/save?title=${bug.title}&severity=${bug.severity}`
+    var queryStr = `/save?title=${bug.title}&description=${bug.description}&severity=${bug.severity}`
 
     if (bug._id) queryStr += `&_id=${bug._id}`
 
