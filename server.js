@@ -16,4 +16,10 @@ app.get('/api/bug/:bugId', (req, res) => {
         .then(bug => res.send(bug))     
 })
 
+app.get('/api/bug/:bugId/remove', (req, res) => {
+    const bugId = req.params.bugId
+    bugService.remove(bugId)
+        .then(() => res.send(`Bug ${bugId} deleted`))
+})
+
 app.listen(3030, () => console.log('Server ready at port 3030'))
