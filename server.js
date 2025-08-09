@@ -1,5 +1,6 @@
 import express from 'express'
 import { bugService } from './services/bug.service.js'
+import { loggerService } from './services/logger.service.js'
 
 const app = express()
 
@@ -21,18 +22,30 @@ app.get('/api/bug/save', (req, res) => {
 
     bugService.save(bugToSave)
         .then(savedBug => res.send(savedBug))
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })    
 })
 
 app.get('/api/bug/:bugId', (req, res) => {
     const bugId = req.params.bugId
     bugService.getById(bugId)
-        .then(bug => res.send(bug))     
+        .then(bug => res.send(bug))
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })     
 })
 
 app.get('/api/bug/:bugId/remove', (req, res) => {
     const bugId = req.params.bugId
     bugService.remove(bugId)
         .then(() => res.send(`Bug ${bugId} deleted`))
+        .catch(err => {
+            loggerService.error(err)
+            res.status(400).send(err)
+        })
 })
 
-app.listen(3030, () => console.log('Server ready at port 3030'))
+app.listen(3030, () => loggerService.info('Server ready at port 3030'))
